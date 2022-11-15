@@ -1,10 +1,16 @@
 # PARAMETERS #                                                                                #
-threads=4     # number of threads to be used for alignment                                    #
-quaBase=25    # base quality for trimming (will only be performed if trimming is required)    #
-minLeng=25    # minimum length for trimming (will only be performed if trimming is required)  #
-mapQua=20     # mapping quality (can be set to 0 if you want to filter later with HapSNP)     #
-input="fastq" # input file raw name                                                           #
+threads=6    # number of threads to be used                                                   #
+quaBase=25   # base quality for trimming (will only be performed if trimming is required)     #
+minLeng=25   # minimum length for trimming (will only be performed if trimming is required)   #
+mapQua=20    # mapping quality (can be set to 0 if you want to filter later with HapSNP)      #
+input="truncated" # input file raw name                                                       #
+                                                                                              #
+# Too many samples: avoid overloading the server                                              #
+min=0                                                                                         #
+beg=1                                                                                         #
+end=144                                                                                       #
 ###############################################################################################
+
 
 
 ####################                   SET UP FILE NAMES                   ####################
@@ -17,19 +23,16 @@ done
 array=($sample)                                             # convert list to array (for iteration later-on)
 ###############################################################################################
 
-
-####################                        TRIMMING                       ####################
 mkdir -p ../testAdapter
-
-for ((i=0; i<${#array[@]}; i++)); do
+for ((i=${min}; i<${end}; i++)); do
         # if all reads are of the same length, then data was not trimmed
         if [ $(wc -l ${array[i]}.read_lengths_distribution.txt | cut -d' ' -f1) -eq 2 ]; then
-		cutadapt --adapter CAAGCAGAAGACGGCATACGAGAT \
-			--quality-base 33 \
-			--quality-cutoff 2 \
-			--minimum-length ${minLeng} \
-			--output ../testAdapter/${array[i]}.trimmed${minLeng}bp${quaBase}q.truncated \
-			${array[i]}.${input}.gz \
-			> ../testAdapter/${array[i]}.trimmed${minLeng}bp${quaBase}q.AdapterRemoval.errors
+                cutadapt --adapter CAAGCAGAAGACGGCATACGAGAT \
+                       --quality-base 33 \
+                       --quality-cutoff 2 \
+                       --minimum-length ${minLeng} \
+                       --output ../testAdapter/${array[i]}.trimmed${minLeng}bp${quaBase}q.truncated \
+                       ${array[i]}.${input}.gz \
+                       > ../testAdapter/${array[i]}.trimmed${minLeng}bp${quaBase}q.cutadapt.errors
         fi
 done
