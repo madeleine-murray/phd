@@ -1,0 +1,5 @@
+Both "mask.sh" and "masking.sh" do the same thing.
+They are just different ways of doing it, but results should be exctly the same.
+
+They mask non-American segements from the 2 Maya in the SGDP database.
+The coordinates of those segments were pre-determined with MOSAIC.
