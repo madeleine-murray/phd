@@ -1,0 +1,59 @@
+##########
+# ReadMe #
+##########
+
+
+DIRECTORY EXPLAINATION:
+
+Two runs were performed for the samples to increase DNA retrieval.
+This directory only focuses on the merged raw files from those two runs.
+The runs are HN00147677/ and HN00147680/
+located at: st1/hdd/pg/human_data_processing/platforms/novaseq_macrogen/snlab/
+
+
+
+DIRECTORY SUMMARY:
+
+1) processRaw
+Novaseq samples were processed with seqPro
+Includes: trimming, alignment, duplicate removal.
+
+2) mergePlatform
+Novaseq samples were merge with miseq samples
+Includes: indel realignment, mapping quality filtering, read length filtering, softclipping.
+
+3) READ
+Genetic relatedness was estimated for samples.
+
+4) READ2
+Genetic relatedness was estimated for individuals.
+
+5) sexing
+Determine molecular sex of individuals.
+
+6) hapMt
+Determine mitochondrial haplogroup for each individual.
+
+7) hapY
+Determine chromosome-Y haplogroup for each male: CpM11, CpM12 and CpM13.
+
+
+
+SCRIPT ORDER:
+
+1) processRaw/raw_data/alignAncientMaya.sh for aligning raw reads from novaseq
+2) mergePlatform/mergePlatforms.sh         for merging novaseq with miseq (miseq is from pg1)
+3) READ/geneticRelatedness.sh              for estimating genetic relatedness of samples
+4) mergePlatform/mergeSamples.sh           for merging samples into individuals
+5) READ/geneticRelatedness2.sh             for estimating genetic relatedness of individuals
+6) sexing/dertermineSex.sh                 for determining molecular sex of individuals
+7) hapMt/haplogroupMt.sh                   for determining mitochondrial haplogroups of individuals
+8) hapY/haplogroupY.sh                     for determining chromosome-Y haplogroups of males
+
+
+
+Sample list:
+CpM02, CpM03, CpM05, CpM06, CpM11, CpM12, CpM13, CpM34, CpM42 and CpM43
+
+Individual list:
+CpM0203, CpM0506, CpM11, CpM12, CpM13, CpM34, CpM4243
